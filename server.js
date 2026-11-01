@@ -1,11 +1,13 @@
 require('dotenv').config();
 const express = require('express');
 const helmet = require('helmet');
+const morgan = require('morgan');
 const path = require('path');
 const { Pool } = require('pg');
 const { z } = require('zod');
 
 const app = express();
+app.use(morgan('combined'));
 app.use(helmet());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -26,6 +28,7 @@ app.post('/api/students', async (req, res) => {
   }
   try {
     await pool.query('INSERT INTO students (name) VALUES ($1)', [parsed.data.name]);
+    console.log('New student registered at', new Date().toISOString());
     res.status(201).json({ ok: true });
   } catch (err) {
     console.error(err);
@@ -35,7 +38,3 @@ app.post('/api/students', async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
-
-    await pool.query('INSERT INTO students (name) VALUES ($1)', [parsed.data.name]);
-    console.log('New student registered at', new Date().toISOString());
-    res.status(201).json({ ok: true });
