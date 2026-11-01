@@ -25,26 +25,11 @@ app.post('/api/students', async (req, res) => {
     return res.status(400).json({ error: parsed.error.issues[0].message });
   }
   try {
-    const result = await pool.query(
-      'INSERT INTO students (name) VALUES ($1) RETURNING id, name, created_at',
-      [parsed.data.name]
-    );
-    res.status(201).json(result.rows[0]);
+    await pool.query('INSERT INTO students (name) VALUES ($1)', [parsed.data.name]);
+    res.status(201).json({ ok: true });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'فشل حفظ الاسم' });
-  }
-});
-
-app.get('/api/students', async (req, res) => {
-  try {
-    const result = await pool.query(
-      'SELECT id, name, created_at FROM students ORDER BY id DESC LIMIT 100'
-    );
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'فشل جلب البيانات' });
   }
 });
 
