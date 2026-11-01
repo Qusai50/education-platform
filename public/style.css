@@ -36,3 +36,6 @@ button:hover { background: #3b82f6; }
 #list { padding-right: 20px; }
 
 .footer { background: #2a280d; color: #9fb0c4; text-align: center; padding: 20px 0; }
+
+.link-card { display: block; text-decoration: none; color: inherit; transition: transform .15s; }
+.link-card:hover { transform: translateY(-4px); }

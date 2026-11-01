@@ -13,14 +13,15 @@ sendBtn.addEventListener('click', async () => {
     });
     const data = await res.json();
     if (res.ok) {
-      msg.textContent = 'تم تسجيلك بنجاح ✅';
-      nameInput.value = '';
+      localStorage.setItem('studentToken', data.token);
+      msg.textContent = 'تم تسجيلك بنجاح ✅ جاري نقلك للبرامج...';
+      setTimeout(() => { window.location.href = 'programs.html'; }, 1200);
     } else {
       msg.textContent = data.error;
+      sendBtn.disabled = false;
     }
   } catch (err) {
     msg.textContent = 'تعذّر الاتصال بالسيرفر، حاول مرة ثانية';
-  } finally {
     sendBtn.disabled = false;
   }
 });
