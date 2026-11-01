@@ -36,7 +36,3 @@ app.post('/api/students', async (req, res) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
 
-
-await pool.query('INSERT INTO students (name) VALUES ($1)', [parsed.data.name]);
-console.log('New student registered at', new Date().toISOString());
-res.status(201).json({ ok: true });
